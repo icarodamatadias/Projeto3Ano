@@ -1,0 +1,12 @@
+server:
+  error:
+    include-stacktrace: on_param
+
+spring:
+  datasource:
+    url: jdbc:mysql://10.28.0.35:3306/Oficina?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: remoto
+    password: remoto
+  jpa:
+    hibernate:
+      ddl-auto: update
