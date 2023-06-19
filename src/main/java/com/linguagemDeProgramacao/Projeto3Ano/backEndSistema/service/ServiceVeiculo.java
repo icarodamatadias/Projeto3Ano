@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceOficina {
+public class ServiceVeiculo {
 
     //private final OficinaRepositorio oficinaRepositorio;
 

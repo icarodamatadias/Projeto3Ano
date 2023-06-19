@@ -4,7 +4,7 @@ package com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.controller;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Veiculo;
 //import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
 //import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
-import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.service.ServiceOficina;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.service.ServiceVeiculo;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,28 +17,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("veiculo")
-public class ControllerOficina {
+public class ControllerVeiculo {
 
-    private final ServiceOficina serviceOficina;
+    private final ServiceVeiculo serviceVeiculo;
 
 
     @GetMapping(path = "lista")
     public ResponseEntity<List<Veiculo>> lista(){
         
-        return  ResponseEntity.ok(serviceOficina.listarTudo());
+        return  ResponseEntity.ok(serviceVeiculo.listarTudo());
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Veiculo> findbyId(@PathVariable long id){
         
-        return ResponseEntity.ok(serviceOficina.findById(id));
+        return ResponseEntity.ok(serviceVeiculo.findById(id));
 
         //return  ResponseEntity.ok(serviceOficina.findbyId(id));
     }
 
     @PostMapping
         public ResponseEntity<Veiculo> save(@RequestBody Veiculo veiculo) {
-        return new ResponseEntity<>(serviceOficina.save(veiculo), HttpStatus.CREATED);
+        return new ResponseEntity<>(serviceVeiculo.save(veiculo), HttpStatus.CREATED);
         }
     /*public ResponseEntity<Veiculo> save(@RequestBody VeiculoPostRequestBody veiculoPostRequestBody){
         return new ResponseEntity<>(serviceOficina.save(veiculoPostRequestBody), HttpStatus.CREATED);
@@ -46,13 +46,13 @@ public class ControllerOficina {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-        serviceOficina.delete(id);
+        serviceVeiculo.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
         public ResponseEntity<Void> replace(@RequestBody Veiculo veiculo) {
-        serviceOficina.replace(veiculo);
+        serviceVeiculo.replace(veiculo);
     /*public ResponseEntity<Void> replace(@RequestBody VeiculoPutRequestBody veiculoPutRequestBody) {
         serviceOficina.replace(veiculoPutRequestBody);*/
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
