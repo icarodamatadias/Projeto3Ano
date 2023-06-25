@@ -14,9 +14,6 @@ import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPut
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-
 
 @Service
 @RequiredArgsConstructor
@@ -24,40 +21,22 @@ public class ServiceVeiculo {
 
     private final VeiculoRepositorio veiculoRepositorio;
 
-    /*private static List<Veiculo> veiculos;
-
-    static{
-        veiculos = new ArrayList<>(List.of(new Veiculo( 1L, 4, "gfm 8753",
-         "corola", "toyota",
-        "problema de ignição", "cemi-novo")));
-    }*/
 
     public List<Veiculo> listarTudo(){
-        //return veiculos;
         return veiculoRepositorio.findAll();
     }
 
     
     public Veiculo findById(long id){
-        
-        /*return veiculos.stream()
-                .filter(veiculo -> veiculo.getId().equals(id))
-                .findFirst()*/
+
         return  veiculoRepositorio.findById(id)
-        
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
          "Veículo não encontrado"));
     }
 
 
-    /*public Veiculo save(Veiculo veiculo){ 
-        veiculo.setId(ThreadLocalRandom.current().nextLong(3, 100000));
-            veiculos.add(veiculo);
-            return veiculo;*/
-        
-        
-        public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBory){
-              
+    public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBory){
+            
         return veiculoRepositorio.save(
             Veiculo.builder()
                 .placa(veiculoPostRequestBory.getPlaca())
@@ -72,14 +51,9 @@ public class ServiceVeiculo {
     }
 
     public void delete(long id) {
-        //veiculos.remove(findById(id));
-
         veiculoRepositorio.delete(findById(id));
     }
 
-    /* public void replace(Veiculo veiculo) {
-        delete(veiculo.getId());
-        veiculos.add(veiculo);*/
     
     public void replace(VeiculoPutRequestBody veiculoPutRequestBody) {
         findById(veiculoPutRequestBody.getId());

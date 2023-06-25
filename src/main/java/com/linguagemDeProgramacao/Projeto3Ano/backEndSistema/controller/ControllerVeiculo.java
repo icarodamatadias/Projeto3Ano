@@ -30,17 +30,11 @@ public class ControllerVeiculo {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Veiculo> findbyId(@PathVariable long id){
-        
-        //return ResponseEntity.ok(serviceVeiculo.findById(id));
-
         return  ResponseEntity.ok(serviceVeiculo.findById(id));
     }
 
     @PostMapping
-        /*public ResponseEntity<Veiculo> save(@RequestBody Veiculo veiculo) {
-        return new ResponseEntity<>(serviceVeiculo.save(veiculo), HttpStatus.CREATED);
-        }*/
-        public ResponseEntity<Veiculo> save(@RequestBody VeiculoPostRequestBody veiculoPostRequestBody){
+    public ResponseEntity<Veiculo> save(@RequestBody VeiculoPostRequestBody veiculoPostRequestBody){
         return new ResponseEntity<>(serviceVeiculo.save(veiculoPostRequestBody), HttpStatus.CREATED);
     }
 
@@ -51,9 +45,8 @@ public class ControllerVeiculo {
     }
 
     @PutMapping
-        /*public ResponseEntity<Void> replace(@RequestBody Veiculo veiculo) {
-        serviceVeiculo.replace(veiculo);*/
-        public ResponseEntity<Void> replace(@RequestBody VeiculoPutRequestBody veiculoPutRequestBody) {
+    
+    public ResponseEntity<Void> replace(@RequestBody VeiculoPutRequestBody veiculoPutRequestBody) {
         serviceVeiculo.replace(veiculoPutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
