@@ -2,8 +2,8 @@ package com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.controller;
 
 
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Veiculo;
-//import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
-//import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.service.ServiceVeiculo;
 
 import java.util.List;
@@ -31,18 +31,18 @@ public class ControllerVeiculo {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Veiculo> findbyId(@PathVariable long id){
         
-        return ResponseEntity.ok(serviceVeiculo.findById(id));
+        //return ResponseEntity.ok(serviceVeiculo.findById(id));
 
-        //return  ResponseEntity.ok(serviceOficina.findbyId(id));
+        return  ResponseEntity.ok(serviceVeiculo.findById(id));
     }
 
     @PostMapping
-        public ResponseEntity<Veiculo> save(@RequestBody Veiculo veiculo) {
+        /*public ResponseEntity<Veiculo> save(@RequestBody Veiculo veiculo) {
         return new ResponseEntity<>(serviceVeiculo.save(veiculo), HttpStatus.CREATED);
-        }
-    /*public ResponseEntity<Veiculo> save(@RequestBody VeiculoPostRequestBody veiculoPostRequestBody){
-        return new ResponseEntity<>(serviceOficina.save(veiculoPostRequestBody), HttpStatus.CREATED);
-    }*/
+        }*/
+        public ResponseEntity<Veiculo> save(@RequestBody VeiculoPostRequestBody veiculoPostRequestBody){
+        return new ResponseEntity<>(serviceVeiculo.save(veiculoPostRequestBody), HttpStatus.CREATED);
+    }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
@@ -51,10 +51,10 @@ public class ControllerVeiculo {
     }
 
     @PutMapping
-        public ResponseEntity<Void> replace(@RequestBody Veiculo veiculo) {
-        serviceVeiculo.replace(veiculo);
-    /*public ResponseEntity<Void> replace(@RequestBody VeiculoPutRequestBody veiculoPutRequestBody) {
-        serviceOficina.replace(veiculoPutRequestBody);*/
+        /*public ResponseEntity<Void> replace(@RequestBody Veiculo veiculo) {
+        serviceVeiculo.replace(veiculo);*/
+        public ResponseEntity<Void> replace(@RequestBody VeiculoPutRequestBody veiculoPutRequestBody) {
+        serviceVeiculo.replace(veiculoPutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

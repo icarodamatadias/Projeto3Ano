@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Veiculo;
-//import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.repositorio.OficinaRepositorio;
-//import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
-//import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.repositorio.VeiculoRepositorio;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
 
 
 import lombok.RequiredArgsConstructor;
@@ -22,43 +22,43 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequiredArgsConstructor
 public class ServiceVeiculo {
 
-    //private final OficinaRepositorio oficinaRepositorio;
+    private final VeiculoRepositorio veiculoRepositorio;
 
-    private static List<Veiculo> veiculos;
+    /*private static List<Veiculo> veiculos;
 
     static{
         veiculos = new ArrayList<>(List.of(new Veiculo( 1L, 4, "gfm 8753",
          "corola", "toyota",
         "problema de ignição", "cemi-novo")));
-    }
+    }*/
 
     public List<Veiculo> listarTudo(){
-        return veiculos;
-        //return oficinaRepositorio.findAll();
+        //return veiculos;
+        return veiculoRepositorio.findAll();
     }
 
     
     public Veiculo findById(long id){
         
-        return veiculos.stream()
+        /*return veiculos.stream()
                 .filter(veiculo -> veiculo.getId().equals(id))
-                .findFirst()
-        //return  oficinaRepositorio.findById(id)
+                .findFirst()*/
+        return  veiculoRepositorio.findById(id)
         
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
          "Veículo não encontrado"));
     }
 
 
-    public Veiculo save(Veiculo veiculo){ 
+    /*public Veiculo save(Veiculo veiculo){ 
         veiculo.setId(ThreadLocalRandom.current().nextLong(3, 100000));
             veiculos.add(veiculo);
-            return veiculo;
+            return veiculo;*/
         
         
-        /*public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBory){
+        public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBory){
               
-        return oficinaRepositorio.save(
+        return veiculoRepositorio.save(
             Veiculo.builder()
                 .placa(veiculoPostRequestBory.getPlaca())
                 .modelo(veiculoPostRequestBory.getModelo())
@@ -68,21 +68,21 @@ public class ServiceVeiculo {
                 .estado_conservacao(veiculoPostRequestBory.getEstado_conservacao())
                 .build()
             
-            );*/
+            );
     }
 
     public void delete(long id) {
-        veiculos.remove(findById(id));
+        //veiculos.remove(findById(id));
 
-        //oficinaRepositorio.delete(findbyId(id));
+        veiculoRepositorio.delete(findById(id));
     }
 
-    public void replace(Veiculo veiculo) {
+    /* public void replace(Veiculo veiculo) {
         delete(veiculo.getId());
-        veiculos.add(veiculo);
-    /* 
+        veiculos.add(veiculo);*/
+    
     public void replace(VeiculoPutRequestBody veiculoPutRequestBody) {
-        findbyId(veiculoPutRequestBody.getId());
+        findById(veiculoPutRequestBody.getId());
         Veiculo veiculo = Veiculo.builder()
             .placa(veiculoPutRequestBody.getPlaca())
             .modelo(veiculoPutRequestBody.getModelo())
@@ -92,6 +92,6 @@ public class ServiceVeiculo {
             .estado_conservacao(veiculoPutRequestBody.getEstado_conservacao())
             .build();
         
-        oficinaRepositorio.save(veiculo);*/
+        veiculoRepositorio.save(veiculo);
     }
 }
