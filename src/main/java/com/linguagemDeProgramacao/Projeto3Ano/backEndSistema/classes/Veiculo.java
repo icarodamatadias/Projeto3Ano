@@ -26,21 +26,10 @@ public class Veiculo {
 	private Long id;
 	//private Long idProprietario;
 	
-	@Column
 	private int rodas;
-
-	@Column
 	private String placa;
-
-	@Column
 	private String modelo;
-
-	@Column
 	private String marca;
-
-	@Column
 	private String descricao;
-
-	@Column
 	private String estado_conservacao;
 }
