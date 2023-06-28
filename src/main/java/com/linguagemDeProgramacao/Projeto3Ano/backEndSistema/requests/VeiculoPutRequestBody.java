@@ -7,7 +7,7 @@ import lombok.Data;
 public class VeiculoPutRequestBody {
 
     private long id;
-	private int rodas;
+	private String rodas;
 	private String placa;
 	private String modelo;
 	private String marca;

@@ -26,7 +26,7 @@ public class Veiculo {
 	private Long id;
 	//private Long idProprietario;
 	
-	private int rodas;
+	private String rodas;
 	private String placa;
 	private String modelo;
 	private String marca;
