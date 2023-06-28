@@ -2,6 +2,7 @@ package com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.controller;
 
 
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Veiculo;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.repositorio.VeiculoRepositorio;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.service.ServiceVeiculo;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class ControllerVeiculo {
 
     private final ServiceVeiculo serviceVeiculo;
+    private final VeiculoRepositorio veiculoRepositorio;
 
 
     @GetMapping(path = "lista")
@@ -31,6 +33,12 @@ public class ControllerVeiculo {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Veiculo> findbyId(@PathVariable long id){
         return  ResponseEntity.ok(serviceVeiculo.findById(id));
+    }
+
+    @GetMapping(value = "buscarPlaca")
+    public ResponseEntity<List<Veiculo>> buscarPlaca(@RequestParam(name = "placa") String placa){
+        List<Veiculo> veiculo = veiculoRepositorio.buscarPlaca(placa.trim().toUpperCase());
+        return new ResponseEntity<List<Veiculo>>(veiculo, HttpStatus.OK);
     }
 
     @PostMapping

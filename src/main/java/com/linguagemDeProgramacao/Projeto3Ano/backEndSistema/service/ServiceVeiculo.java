@@ -35,16 +35,16 @@ public class ServiceVeiculo {
     }
 
 
-    public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBory){
+    public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBody){
             
         return veiculoRepositorio.save(
             Veiculo.builder()
-                .placa(veiculoPostRequestBory.getPlaca())
-                .modelo(veiculoPostRequestBory.getModelo())
-                .marca(veiculoPostRequestBory.getMarca())
-                .rodas(veiculoPostRequestBory.getRodas())
-                .descricao(veiculoPostRequestBory.getDescricao())
-                .estado_conservacao(veiculoPostRequestBory.getEstado_conservacao())
+                .placa(veiculoPostRequestBody.getPlaca())
+                .modelo(veiculoPostRequestBody.getModelo())
+                .marca(veiculoPostRequestBody.getMarca())
+                .rodas(veiculoPostRequestBody.getRodas())
+                .descricao(veiculoPostRequestBody.getDescricao())
+                .estado_conservacao(veiculoPostRequestBody.getEstado_conservacao())
                 .build()
             
             );
