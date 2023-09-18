@@ -2,6 +2,10 @@ package com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,17 +35,22 @@ public class ControllerFuncionario {
     private final FuncionarioRepositorio funcionarioRepositorio;
 
     @GetMapping(path = "lista")
-    public ResponseEntity<List<Funcionario>> lista(){
+    public ResponseEntity<Page<Funcionario>> lista(Pageable pageable){
         
-        return  ResponseEntity.ok(serviceFuncionario.listarTudo());
+        return  ResponseEntity.ok(serviceFuncionario.listarTudo(pageable));
     }
+
+    @GetMapping(path = "/todos")
+    public ResponseEntity<List<Funcionario>> listAll() {
+        return ResponseEntity.ok(serviceFuncionario.listAllNonPageable());
+    } 
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Funcionario> findbyId(@PathVariable long id){
         return  ResponseEntity.ok(serviceFuncionario.findById(id));
     }
 
-    @GetMapping(value = "buscarNome")
+    @GetMapping(path = "/buscarNome")
     public ResponseEntity<List<Funcionario>> buscarPlaca(@RequestParam(name = "nome") String nome){
         List<Funcionario> cliente = funcionarioRepositorio.buscarNome(nome.trim().toUpperCase());
         return new ResponseEntity<List<Funcionario>>(cliente, HttpStatus.OK);
@@ -49,9 +58,9 @@ public class ControllerFuncionario {
 
 
     @PostMapping
-    public ResponseEntity<Funcionario> save(@RequestBody FuncionarioPostRequestBody funcionarioPostRequestBody){
+    public ResponseEntity<Funcionario> save(@Valid @RequestBody FuncionarioPostRequestBody funcionarioPostRequestBody){
         return new ResponseEntity<>(serviceFuncionario.save(funcionarioPostRequestBody), HttpStatus.CREATED);
-    }
+    } 
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {

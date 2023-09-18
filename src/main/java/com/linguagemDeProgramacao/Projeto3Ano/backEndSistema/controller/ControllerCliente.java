@@ -2,6 +2,10 @@ package com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,16 +35,20 @@ public class ControllerCliente {
     private final ClienteRepositorio clienteRepositorio;
 
     @GetMapping(path = "lista")
-    public ResponseEntity<List<Cliente>> lista(){
+    public ResponseEntity<Page<Cliente>> lista(Pageable pageable){
         
-        return  ResponseEntity.ok(serviceCliente.listarTudo());
-    }
+        return  ResponseEntity.ok(serviceCliente.listarTudo(pageable));
+     }
+
+    @GetMapping(path = "/todos")
+    public ResponseEntity<List<Cliente>> listAll() {
+        return ResponseEntity.ok(serviceCliente.listAllNonPageable());} 
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Cliente> findbyId(@PathVariable long id){
         return  ResponseEntity.ok(serviceCliente.findById(id));
     }
-    @GetMapping(value = "buscarNome")
+    @GetMapping(path = "/buscarNome")
     public ResponseEntity<List<Cliente>> buscarPlaca(@RequestParam(name = "nome") String nome){
         List<Cliente> cliente = clienteRepositorio.buscarNome(nome.trim().toUpperCase());
         return new ResponseEntity<List<Cliente>>(cliente, HttpStatus.OK);
@@ -48,7 +56,7 @@ public class ControllerCliente {
 
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody ClientePostRequestBody clientePostRequestBody){
+    public ResponseEntity<Cliente> save(@Valid @RequestBody ClientePostRequestBody clientePostRequestBody){
         return new ResponseEntity<>(serviceCliente.save(clientePostRequestBody), HttpStatus.CREATED);
     }
 

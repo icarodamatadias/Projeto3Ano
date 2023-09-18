@@ -1,12 +1,17 @@
 package com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.service;
 
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Veiculo;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.exceptions.BadRequestException;
+import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.mappers.VeiculoMapper;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.repositorio.VeiculoRepositorio;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPostRequestBody;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.VeiculoPutRequestBody;
@@ -22,32 +27,24 @@ public class ServiceVeiculo {
     private final VeiculoRepositorio veiculoRepositorio;
 
 
-    public List<Veiculo> listarTudo(){
-        return veiculoRepositorio.findAll();
+    public Page<Veiculo> listarTudo(Pageable pageable){
+        return veiculoRepositorio.findAll(pageable);
     }
 
+    public List<Veiculo> listAllNonPageable() {
+        return veiculoRepositorio.findAll();
+    }
     
     public Veiculo findById(long id){
 
         return  veiculoRepositorio.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-         "Veículo não encontrado"));
+        .orElseThrow(() -> new BadRequestException("Veículo não encontrado"));
     }
 
-
+    @Transactional
     public Veiculo save(VeiculoPostRequestBody veiculoPostRequestBody){
             
-        return veiculoRepositorio.save(
-            Veiculo.builder()
-                .placa(veiculoPostRequestBody.getPlaca())
-                .modelo(veiculoPostRequestBody.getModelo())
-                .marca(veiculoPostRequestBody.getMarca())
-                .rodas(veiculoPostRequestBody.getRodas())
-                .descricao(veiculoPostRequestBody.getDescricao())
-                .estado_conservacao(veiculoPostRequestBody.getEstado_conservacao())
-                .build()
-            
-            );
+        return veiculoRepositorio.save(VeiculoMapper.INSTANCE.toVeiculo(veiculoPostRequestBody));
     }
 
     public void delete(long id) {
@@ -56,16 +53,10 @@ public class ServiceVeiculo {
 
     
     public void replace(VeiculoPutRequestBody veiculoPutRequestBody) {
-        findById(veiculoPutRequestBody.getId());
-        Veiculo veiculo = Veiculo.builder()
-            .placa(veiculoPutRequestBody.getPlaca())
-            .modelo(veiculoPutRequestBody.getModelo())
-            .marca(veiculoPutRequestBody.getMarca())
-            .rodas(veiculoPutRequestBody.getRodas())
-            .descricao(veiculoPutRequestBody.getDescricao())
-            .estado_conservacao(veiculoPutRequestBody.getEstado_conservacao())
-            .build();
-        
+        Veiculo savedVeiculo = findById(veiculoPutRequestBody.getId());
+        Veiculo veiculo = VeiculoMapper.INSTANCE.toVeiculo(veiculoPutRequestBody);    
+        veiculo.setId(savedVeiculo.getId());
+    
         veiculoRepositorio.save(veiculo);
     }
 }

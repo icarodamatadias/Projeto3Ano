@@ -9,4 +9,4 @@ spring:
     password: remoto
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update   
