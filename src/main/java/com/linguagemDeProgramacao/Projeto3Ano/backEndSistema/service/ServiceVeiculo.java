@@ -56,7 +56,6 @@ public class ServiceVeiculo {
         Veiculo savedVeiculo = findById(veiculoPutRequestBody.getId());
         Veiculo veiculo = VeiculoMapper.INSTANCE.toVeiculo(veiculoPutRequestBody);    
         veiculo.setId(savedVeiculo.getId());
-    
         veiculoRepositorio.save(veiculo);
     }
 }
