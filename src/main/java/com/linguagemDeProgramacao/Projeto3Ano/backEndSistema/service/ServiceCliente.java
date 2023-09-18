@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Cliente;
-import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.classes.Funcionario;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.exceptions.BadRequestException;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.mappers.ClienteMapper;
-import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.mappers.FuncionarioMapper;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.repositorio.ClienteRepositorio;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.ClientePostRequestBody;
 import com.linguagemDeProgramacao.Projeto3Ano.backEndSistema.requests.ClientePutRequestBody;
